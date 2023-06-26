@@ -2,6 +2,7 @@ const { Router } = require("express");
 
 const UserController = require("../controllers/UsersController");
 
+
 const userRoutes = Router();
 
 
@@ -14,7 +15,9 @@ function myMiddleware(request, response, next) {
 const userController = new UserController()
 
 
+
 userRoutes.post("/",userController.create)
+userRoutes.get("/",userController.index)
 userRoutes.put("/:id",userController.update)
 
 

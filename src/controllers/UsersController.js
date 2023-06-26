@@ -70,5 +70,14 @@ class UserController {
       "message": `The user ${user.name} has been updated`
     })
   }
+
+  async index(request,response){
+    const database = await sqliteConnection();
+    const allSUers = await database.get("SELECT * FROM users")
+    console.log(allSUers)
+
+    response.status(201).json({allSUers})
+
+  }
 }
 module.exports = UserController
