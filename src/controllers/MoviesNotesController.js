@@ -1,6 +1,6 @@
 const knex = require("../database/knex")
 const AppError = require("../utils/AppError")
-const sqliteConnection = require("../database/sqlite")
+
 
 
 class MovieNotesController {

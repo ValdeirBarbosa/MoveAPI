@@ -1,6 +1,8 @@
 const { hash,compare } = require("bcryptjs");
+const knex = require("../database/knex")
 const AppError = require("../utils/AppError")
-const sqliteConnection = require('../database/sqlite')
+const sqliteConnection = require('../database/sqlite');
+const { all } = require("../routes");
 
 class UserController {
 
@@ -72,12 +74,10 @@ class UserController {
   }
 
   async index(request,response){
-    const database = await sqliteConnection();
-    const allSUers = await database.get("SELECT * FROM users")
-    console.log(allSUers)
-
-    response.status(201).json({allSUers})
-
-  }
+    
+    const allSUers = await knex("users").select()
+    console.log(typeof(allSUers))
+    response.status(201).json({ allSUers })
+}
 }
 module.exports = UserController
