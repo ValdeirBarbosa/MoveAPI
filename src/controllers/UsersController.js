@@ -2,8 +2,6 @@ const { hash,compare } = require("bcryptjs");
 const knex = require("../database/knex")
 const AppError = require("../utils/AppError")
 const sqliteConnection = require('../database/sqlite');
-const { all } = require("../routes");
-
 class UserController {
 
   async create(request, response) {
@@ -26,7 +24,6 @@ class UserController {
         message: `The user ${name} has been created `
       });
   }
-
   async update(request, response) {
     const { name, email, password, oldPassword } = request.body
     const { id } = request.params
@@ -72,12 +69,35 @@ class UserController {
       "message": `The user ${user.name} has been updated`
     })
   }
-
   async index(request,response){
-    
-    const allSUers = await knex("users").select()
-    console.log(typeof(allSUers))
+    const allSUers = await knex("users").select("id","name","avatar","email")
+    console.log((allSUers))
     response.status(201).json({ allSUers })
 }
+  async show(request, response) {
+    const {user_id} = request.params
+    const user = await knex("users").where({ id: user_id }).select("id", "name", "email", "avatar")
+    console.log(user)
+    response.status(201).json(user)
+  }
+  async drop(request, response){
+    const{id} = request.params
+    const user = await knex("users").where({id: id}).first()
+    if (!user) {
+      throw new AppError("User not found", 404)
+    }
+
+    const isTagsByUser = await knex("movie_tags").where({user_id:id})
+    if (isTagsByUser.length >0){
+      throw new AppError(`please delete first all notes cerated by this user_id:${id}`,401)
+    }else{
+       await knex("users").where({id:id }).delete()
+      console.log("deleted")
+      response.status(204).json()
+     }
+    
+
+  }
+
 }
 module.exports = UserController
