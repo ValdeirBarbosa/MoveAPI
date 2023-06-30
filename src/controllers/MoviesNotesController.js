@@ -11,7 +11,9 @@ class MovieNotesController {
     const [user] = await knex("users").where({ id: user_id })
     if (!user) {
       throw new AppError('User not found', 404)
-    } else {
+    } else if (movie_rate > 5 || movie_rate <1){
+      throw new AppError('The movie rate must be between 1 and 5', 401)
+    }else {
       // [moviesNotes]  get the first index value of array
       const [moviesNotes] = await knex("movies_notes").insert(
         {
@@ -33,6 +35,12 @@ class MovieNotesController {
         message: `The movie note of the movie ${title} has been created =)`
       })
     }
+
+  }
+
+  async index(request, response){
+    
+    const {id, user_id} = request.params
 
   }
 }
