@@ -92,7 +92,7 @@ class UserController {
       throw new AppError(`please delete first all notes cerated by this user_id:${id}`,401)
     }else{
        await knex("users").where({id:id }).delete()
-      console.log("deleted")
+      
       response.status(204).json()
      }
     

@@ -39,7 +39,6 @@ class MovieNotesController {
   }
 
   async index(request, response){
-    
     const {id, user_id} = request.params
 
   }
