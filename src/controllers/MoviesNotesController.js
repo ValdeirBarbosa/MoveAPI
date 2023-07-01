@@ -40,7 +40,14 @@ class MovieNotesController {
 
   async index(request, response){
     
-    const {id, user_id} = request.params
+     const {id} = request.params
+
+    const [movie] = await knex("movies_notes").where({id:id})
+    response.status(201).json(movie)
+
+  }
+
+  async show(request, response){
 
   }
 }

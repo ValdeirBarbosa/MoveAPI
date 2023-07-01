@@ -12,6 +12,9 @@ class UserController {
     if (checkUserExists) {
       throw new AppError(`The email ${email} is already in use`)
     }
+    if (!validateEmail(email)){
+      throw new AppError("The email is not a valid!",401)
+    }
 
     let hashedPasswords = await hash(password, 8)
 
@@ -72,7 +75,7 @@ class UserController {
   async index(request,response){
     const allSUers = await knex("users").select("id","name","avatar","email")
     console.log((allSUers))
-    response.status(201).json({ allSUers })
+    response.status(201).json( allSUers )
 }
   async show(request, response) {
     const {user_id} = request.params
@@ -99,5 +102,11 @@ class UserController {
 
   }
 
+}
+
+
+function validateEmail(email) {
+  var re = /\S+@\S+\.\S+/;
+  return re.test(email);
 }
 module.exports = UserController
