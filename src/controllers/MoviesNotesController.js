@@ -1,6 +1,6 @@
+const { Knex } = require("knex")
 const knex = require("../database/knex")
 const AppError = require("../utils/AppError")
-
 
 
 class MovieNotesController {
@@ -11,9 +11,9 @@ class MovieNotesController {
     const [user] = await knex("users").where({ id: user_id })
     if (!user) {
       throw new AppError('User not found', 404)
-    } else if (movie_rate > 5 || movie_rate <1){
+    } else if (movie_rate > 5 || movie_rate < 1) {
       throw new AppError('The movie rate must be between 1 and 5', 401)
-    }else {
+    } else {
       // [moviesNotes]  get the first index value of array
       const [moviesNotes] = await knex("movies_notes").insert(
         {
@@ -38,6 +38,7 @@ class MovieNotesController {
 
   }
 
+<<<<<<< HEAD
   async index(request, response){
     
      const {id} = request.params
@@ -48,9 +49,43 @@ class MovieNotesController {
   }
 
   async show(request, response){
+=======
+  async show(request, response) {
+    const { id } = request.params
+    const [movies] = await knex("movies_notes").where({ id: id })
+    const TagOfMovie = await knex("movie_tags").where({ movie_notes_id: id }).select("tag_name")
+    if (!movies) {
+      throw new AppError("Movie not found", 404)
+    }
+    response.json({
+      ...movies,
+      TagOfMovie
+    })
+>>>>>>> 99306164b2504fe543f0f3e61cb2ec675e2bd407
 
+  }
+  async index(request, response) {
+    const allMovies = await knex("movies_notes").select()
+    const allTags = await knex("movie_tags").select()
+
+    const moviesWithTags = allMovies.map(movie => {
+      const tagsMovie = allTags.filter(tag => movie.id === tag.movie_notes_id).map(tag => ({ tag_name: tag.tag_name }))
+
+      return {
+        ...movie,
+        tags: tagsMovie
+      }
+    })
+    response.json(moviesWithTags)
   }
 }
 
 
+
+
 module.exports = MovieNotesController
+
+
+
+
+
