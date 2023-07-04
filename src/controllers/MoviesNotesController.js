@@ -38,30 +38,16 @@ class MovieNotesController {
 
   }
 
-<<<<<<< HEAD
-  async index(request, response){
-    
-     const {id} = request.params
+  async index(request, response) {
 
-    const [movie] = await knex("movies_notes").where({id:id})
+    const { id } = request.params
+
+    const [movie] = await knex("movies_notes").where({ id: id })
     response.status(201).json(movie)
 
   }
 
-  async show(request, response){
-=======
   async show(request, response) {
-    const { id } = request.params
-    const [movies] = await knex("movies_notes").where({ id: id })
-    const TagOfMovie = await knex("movie_tags").where({ movie_notes_id: id }).select("tag_name")
-    if (!movies) {
-      throw new AppError("Movie not found", 404)
-    }
-    response.json({
-      ...movies,
-      TagOfMovie
-    })
->>>>>>> 99306164b2504fe543f0f3e61cb2ec675e2bd407
 
   }
   async index(request, response) {
