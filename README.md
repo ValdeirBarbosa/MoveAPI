@@ -2,7 +2,7 @@
 ## Desafio Nivel 08 Curso Explorer turma 07  Rocketseat
 ### A ideia agora é criar uma aplicação em Node.js onde o usuário cadastra um filme, preenche com algumas informações (nome, descrição, nota) e cria tags relacionadas a ele.
 #### Foi aplicado 
-1. Verbos de HTTPrequest; 
+1. Verbos de HTTP Request; 
 2. HTTP status;
 3. Request.params / request.body / requet.query
 4. Rotas em nodeJS
