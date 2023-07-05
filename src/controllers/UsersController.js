@@ -12,9 +12,9 @@ class UserController {
     if (checkUserExists) {
       throw new AppError(`The email ${email} is already in use`)
     }
-    if (!validateEmail(email)){
-      throw new AppError("The email is not a valid!",401)
-    }
+    // if (!validateEmail(email)){
+    //   throw new AppError("The email is not a valid!",401)
+    // }
 
     let hashedPasswords = await hash(password, 8)
 
@@ -105,8 +105,8 @@ class UserController {
 }
 
 
-function validateEmail(email) {
-  var re = /\S+@\S+\.\S+/;
-  return re.test(email);
-}
+// function validateEmail(email) {
+//   var re = /\S+@\S+\.\S+/;
+//   return re.test(email);
+// }
 module.exports = UserController
